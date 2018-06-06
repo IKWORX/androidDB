@@ -7,8 +7,10 @@ $user_pass=$_POST["pass"];
 //$user_name="veronica@ikworx.co.za";
 //$user_pass="vero123";
 $response=array();
+$saleID="";
 if(isset($_POST['user']) and isset($_POST['pass']))
 {
+	
 $sql = "SELECT * FROM dbo.Sales_Rep WHERE S_Emails = '$user_name'";
 
       
@@ -27,8 +29,10 @@ $sql = "SELECT * FROM dbo.Sales_Rep WHERE S_Emails = '$user_name'";
 				if($row['S_Password']===$user_pass)
 				{
 					$message='loginOK';
+					
 					$status=2;
 					http_response_code(200);
+					$saleID=$row['SalesID'];
 				}
 				
 			}
@@ -40,7 +44,7 @@ $sql = "SELECT * FROM dbo.Sales_Rep WHERE S_Emails = '$user_name'";
 			}
 	
 			
-			array_push($response,array("message"=>$message,"status"=>$status));
+			array_push($response,array("message"=>$message,"status"=>$status,"saleID"=>$saleID));
   
           echo json_encode(array("server_response"=>$response));
 }else{
